@@ -17,7 +17,7 @@ class AsyncApiConfig:
     use_trial_resource = os.getenv("AIDGE_USE_TRIAL_RESOURCE", "false").lower() == "true"
 
 class AsyncApiClient:
-    def __init__(self, max_concurrent_requests=10, timeout=60):
+    def __init__(self, max_concurrent_requests=20, timeout=60):
         """初始化异步API客户端
         
         Args:
@@ -30,7 +30,10 @@ class AsyncApiClient:
     
     async def __aenter__(self):
         """创建HTTP会话"""
-        self.session = aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=self.timeout))
+        self.session = aiohttp.ClientSession(
+            timeout=aiohttp.ClientTimeout(total=self.timeout),
+            connector=aiohttp.TCPConnector(limit=100)  # 增加连接池大小
+        )
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -104,7 +107,7 @@ class AsyncApiClient:
             print(f"解析任务ID异常: {e}")
             return None
     
-    async def poll_task_status(self, query_api_name, task_id, max_retries=60, initial_delay=1, max_delay=10):
+    async def poll_task_status(self, query_api_name, task_id, max_retries=30, initial_delay=0.5, max_delay=5):
         """轮询任务状态（使用指数退避策略）
         
         Args:

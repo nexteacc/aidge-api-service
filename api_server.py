@@ -57,7 +57,7 @@ class ApiRequest(BaseModel):
 # 批量请求模型
 class BatchApiRequest(BaseModel):
     requests: List[ApiRequest]
-    max_concurrent: Optional[int] = 5
+    max_concurrent: Optional[int] = 10  # 增加默认并发数
     
     class Config:
         schema_extra = {
