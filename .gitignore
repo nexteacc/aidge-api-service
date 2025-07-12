@@ -1,0 +1,38 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Virtual environment
+.venv/
+virtualenv/
+env/
+venv/
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.Trashes
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Environment variables
+.env
+
+# Test and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Docker related (if not already in .dockerignore)
+# .dockerignore # If you want to ignore the .dockerignore itself
+
+# Fly.io related (if not already in .dockerignore)
+# fly.toml # If you want to ignore the fly.toml itself
